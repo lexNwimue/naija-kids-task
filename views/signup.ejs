@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target="#myNav"
+          >
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/" class="navbar-brand">Registration Site</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNav"></div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row mt-1">
+        <h3 class="text-muted text-center mb-3">Create Account</h3>
+        <br />
+        <div class="col-lg-12 mt-5 mt-lg-0">
+          <form id="form">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="name" class="text-muted">First Name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  class="form-control"
+                  id="firstName"
+                  placeholder="Enter first name..."
+                  required
+                />
+                <span id="firstName-err" class="err-span"></span>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <label for="lastname" class="text-muted">Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="lastName"
+                  id="lastName"
+                  required
+                  placeholder="Enter last name..."
+                />
+                <span id="lastName-err" class="err-span"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <label for="phone" class="text-muted">Age</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="age"
+                  id="age"
+                  placeholder="In years: between 5 - 15"
+                  required
+                  min="5"
+                  max="15"
+                />
+                <span id="age-err" class="err-span"></span>
+              </div>
+              <div class="col-md-6 form-group form-check">
+                <label for="address" class="text-muted">Gender: </label> <br />
+                <label class="radio-inline form-check-label">
+                  <input
+                    type="radio"
+                    name="gender"
+                    class="form-check-input"
+                    value="male"
+                    required
+                  />Male
+                </label>
+                <label class="radio-inline form-check-label">
+                  <input
+                    type="radio"
+                    name="gender"
+                    class="form-check-input"
+                    value="female"
+                    required
+                  />Female
+                </label>
+                <span id="gender-err" class="err-span"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <label for="state" class="text-muted">State</label>
+                <input
+                  type="text"
+                  name="state"
+                  class="form-control"
+                  id="state"
+                  placeholder="State of Origin..."
+                  required
+                />
+                <span id="email-err" class="err-span"></span>
+              </div>
+              <span id="state-err" class="err-span"></span>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <label for="email" class="text-muted">Parent's Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Parent's Email address..."
+                  required
+                />
+                <span id="email-err" class="err-span"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 form-group mt-3 mt-md-0">
+                <label for="church" class="text-muted">Church Name</label>
+                <select name="church" id="church" class="form-control" required>
+                  <option value="CA">Church A</option>
+                  <option value="CB">Church B</option>
+                  <option value="CC">Church C</option>
+                </select>
+                <span id="church-err" class="err-span"></span>
+              </div>
+            </div>
+
+            <div class="text-center mt-2">
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <br />
+              <div
+                id="success-msg"
+                class="bg-success mt-5"
+                style="
+                  width: 30%;
+                  margin: auto;
+                  margin-top: 20px;
+                  padding: 10px;
+                  display: none;
+                "
+              >
+                Registration Successful
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="./bootstrap/js/jQuery-2.1.3.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="/myscripts.js"></script>
+  </body>
+</html>
