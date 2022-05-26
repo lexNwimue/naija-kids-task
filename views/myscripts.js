@@ -14,6 +14,7 @@ $(document).ready(() => {
     const church = form.church.value;
 
     // Get error spans
+    const emailErr = document.getElementById("email-err");
     const firstNameErr = document.getElementById("firstName-err");
     const lastNameErr = document.getElementById("lastName-err");
     const stateErr = document.getElementById("state-err");
@@ -58,7 +59,22 @@ $(document).ready(() => {
         body: JSON.stringify(data),
       })
         .then((response) => response.json())
-        .then((data) => console.log(data))
+        .then((data) => {
+          if (data.emailErr) {
+            emailErr.innerHTML = "Email already exists";
+            emailErr.style.display = "block";
+          }
+          if (data.nameErr) {
+            firstNameErr.innerHTML = "Name already exists";
+            firstNameErr.style.display = "block";
+            lastNameErr.innerHTML = "Name already exists";
+            lasttNameErr.style.display = "block";
+          }
+
+          if (data.success) {
+            document.getElementById("success-msg").style.display = "block";
+          }
+        })
         .catch((err) => console.log(err));
     }
   });

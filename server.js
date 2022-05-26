@@ -39,24 +39,34 @@ app.post("/signup", async (req, res) => {
     church,
   };
 
-  const status = await userModel.validateDetails(data.email, data.name);
-  console.log("Logging status: " + status);
-
   let response;
-  if (status.nameErr) {
-    response = {
-      nameErr: data.firstName + " " + data.lastName + " already exists...",
-    };
-  } else if (status.emailErr) {
-    response = { emailErr: data.email + " already exists" };
-  } else if (status.success) {
-    console.log("Correct details entered");
-    const user = new userModel.User(data);
-    user
-      .save()
-      .then((doc) => console.log("User saved successfully"))
-      .catch((err) => console.log(err.message));
-  }
+  // if (status.nameErr) {
+  //
+  // } else if (status.emailErr) {
+
+  // } else if (status.success) {
+
+  const user = new userModel.User(data);
+  user
+    .save()
+    .then((doc) => res.json(response))
+    .catch((err) => {
+      if (err.message.includes("email_1")) {
+        response = {
+          nameErr: data.firstName + " " + data.lastName + " already exists...",
+        };
+        res.json(response);
+      }
+
+      if (err.message.includes("name_1")) {
+        response = { emailErr: data.email + " already exists" };
+        res.json(response);
+      } else {
+        response = { success: "User registered successfully..." };
+        res.json(response);
+      }
+    });
+  // }
 });
 
 app.get("*", (req, res) => {
