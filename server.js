@@ -11,7 +11,6 @@ app.use(express.static("views"));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-// const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.bmtc1.mongodb.net/auth_db?retryWrites=true&w=majority`;
 const uri = "mongodb://localhost/NaijaKidsDB";
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -32,7 +31,7 @@ app.get("/signup", (req, res) => {
 app.post("/signup", async (req, res) => {
   const { firstName, lastName, age, gender, state, email, church } = req.body;
   const data = {
-    name: firstName + " " + lastName,
+    name: "${firstName} ${lastName}",
     age,
     gender,
     state,
@@ -40,10 +39,11 @@ app.post("/signup", async (req, res) => {
     church,
   };
 
-  const status = userModel.validateDetails(data.email, data.name);
-  console.log(status);
+  const status = await userModel.validateDetails(data.email, data.name);
+  console.log("Logging status: " + status);
+
   let response;
-  if (status.nameErr == "undefined") {
+  if (status.nameErr) {
     response = {
       nameErr: data.firstName + " " + data.lastName + " already exists...",
     };
@@ -51,6 +51,11 @@ app.post("/signup", async (req, res) => {
     response = { emailErr: data.email + " already exists" };
   } else if (status.success) {
     console.log("Correct details entered");
+    const user = new userModel.User(data);
+    user
+      .save()
+      .then((doc) => console.log("User saved successfully"))
+      .catch((err) => console.log(err.message));
   }
 });
 

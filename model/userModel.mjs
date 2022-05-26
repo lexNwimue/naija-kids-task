@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const mongodb = "mongodb://localhost/registrationDB";
 
 const Schema = mongoose.Schema;
 
@@ -6,6 +7,7 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
+      unique: true,
       required: true,
     },
     email: {
@@ -36,19 +38,25 @@ const userSchema = new Schema(
 
 const User = mongoose.model("User", userSchema);
 
-const validateDetails = (emailArg, nameArg) => {
-  console.log("running validateDetails");
-  User.findOne({ email: emailArg })
-    .then((result) => {
-      console.log("Result of finding email: " + result);
-      if (result) return { emailErr: "Email already exists" };
-      User.findOne({ name: nameArg }).then((result2) => {
-        console.log("Result of finding name: " + result2);
-        if (result2) return { nameErr: "Name already exists" };
-        return { success: "Validation passed..." };
-      });
-    })
-    .catch((err) => console.log(err));
+const validateDetails = async (emailArg, nameArg) => {
+  try {
+    await mongoose.connect(mongodb, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    let result = await User.findOne({ email: emailArg });
+    console.log("Result of finding email: " + result);
+    if (result) return { emailErr: "Email already exists" };
+
+    result = await User.findOne({ name: nameArg }).then((result2) => {
+      console.log("Result of finding name: " + result);
+      if (result) return { nameErr: "Name already exists" };
+      return { success: "Validation passed..." };
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export default {
